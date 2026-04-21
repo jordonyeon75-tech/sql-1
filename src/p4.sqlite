@@ -1,0 +1,7 @@
+-- Let's say we want to update product_id 1 to a new price of 1300.00
+UPDATE inventories
+SET price = 1300.00
+WHERE product_id = 1;
+
+UPDATE inventories
+SET price = price * 1.10;
