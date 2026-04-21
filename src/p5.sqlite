@@ -1,0 +1,19 @@
+SELECT 
+    department, 
+    AVG(salary) AS average_salary
+FROM employees
+GROUP BY department;
+
+SELECT 
+    department,
+    name AS employee_name,
+    salary AS highest_salary
+FROM (
+    SELECT 
+        department,
+        name,
+        salary,
+        RANK() OVER (PARTITION BY department ORDER BY salary DESC) as salary_rank
+    FROM employees
+) AS ranked_salaries
+WHERE salary_rank = 1;
