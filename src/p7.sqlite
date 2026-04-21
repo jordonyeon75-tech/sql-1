@@ -1,0 +1,11 @@
+DELETE FROM customers
+WHERE customer_id = 1;
+
+-- Step 1: Delete from Sales (the most specific record)
+DELETE FROM sales WHERE customer_id = 1;
+
+-- Step 2: Delete from Orders
+DELETE FROM orders WHERE customer_id = 1;
+
+-- Step 3: Finally, delete the Customer
+DELETE FROM customers WHERE customer_id = 1;
