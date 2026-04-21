@@ -1,1 +1,74 @@
+-- 1. Employees Table
+CREATE TABLE employees (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    position TEXT,
+    department TEXT,
+    salary NUMERIC
+);
 
+-- 2. Customers Table
+CREATE TABLE customers (
+    customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_name TEXT NOT NULL,
+    city TEXT
+);
+
+-- 3. Inventories (Products) Table
+CREATE TABLE inventories (
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_name TEXT NOT NULL,
+    quantity INTEGER DEFAULT 0,
+    price NUMERIC
+);
+
+-- 4. Orders Table
+CREATE TABLE orders (
+    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_date DATE DEFAULT CURRENT_DATE,
+    customer_id INTEGER,
+    total_amount NUMERIC,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+-- 5. Sales Table (Linking Orders to Products)
+CREATE TABLE sales (
+    sale_id INTEGER PRIMARY KEY AUTOINCREMENT, -- Added for normalization
+    order_id INTEGER,
+    customer_id INTEGER,
+    product_id INTEGER,
+    quantity INTEGER,
+    sale_date DATE,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (product_id) REFERENCES inventories(product_id)
+);
+
+-- Insert Employees
+INSERT INTO employees (name, position, department, salary) VALUES 
+('Alice Johnson', 'Manager', 'Sales', 75000),
+('Bob Smith', 'Developer', 'IT', 65000),
+('Charlie Brown', 'Analyst', 'Marketing', 55000);
+
+-- Insert Customers
+INSERT INTO customers (customer_name, city) VALUES 
+('TechCorp', 'New York'),
+('RetailMe', 'Chicago'),
+('Global Logistics', 'San Francisco');
+
+-- Insert Inventories
+INSERT INTO inventories (product_name, quantity, price) VALUES 
+('Laptop', 50, 1200.00),
+('Monitor', 100, 300.00),
+('Keyboard', 200, 50.00);
+
+-- Insert Orders
+INSERT INTO orders (order_date, customer_id, total_amount) VALUES 
+('2024-03-01', 1, 1500.00),
+('2024-03-02', 2, 300.00);
+
+-- Insert Sales
+INSERT INTO sales (order_id, customer_id, product_id, quantity, sale_date) VALUES 
+(1, 1, 1, 1, '2024-03-01'),
+(1, 1, 2, 1, '2024-03-01'),
+(2, 2, 2, 1, '2024-03-02');
